@@ -1,2 +1,1 @@
-# Countdown-timer-laravel
-Countdown timer (laravel)
+# This is a simple Laravel Count-down timer website
