@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialLoginController;
 Route::get('/', function () {
-    return view('login');
+    return view('auth/login');
 });
 
 Route::middleware([
@@ -18,12 +18,8 @@ Route::middleware([
 });
 
 
-
-Route::get('auth/{provider}/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
-Route::get('auth/{provider}/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
-
-// Route::middleware("auth")->group(function () {
-//     Route::get('/', function () {
-//         return 'welcome ';
-//     })->name('home');
-// });
+Route::get('/login/guest', function () {
+    return view('dashboard');
+});
+Route::get('login/{provider}/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
+Route::get('login/{provider}/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
