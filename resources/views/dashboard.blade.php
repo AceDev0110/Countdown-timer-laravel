@@ -51,16 +51,21 @@
     <!-- Settings Modal -->
     <div id="settingsModal" class="fixed inset-0 flex items-center justify-center modal-bg hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-2xl font-bold mb-4">Settings</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold mb-1">Settings</h2>
+                @if ($signin != '1')
+                    <p class="text-red-400">Signin to experience full features</p>
+                @endif
+            </div>
+
+
             <div>
                 <label class="block mb-2">
                     Timer Mode:
                 </label>
                 <select id="timerMode" class="block border rounded p-2 w-full mb-4">
                     <option value="predefined">Predefined</option>
-                    @if ($signin == '1')
-                        <option value="custom">Custom</option>
-                    @endif
+                    <option value="custom" @if ($signin != '1') disabled @endif>Custom</option>
                 </select>
             </div>
 
@@ -79,31 +84,47 @@
                 </select>
             </div>
 
-            @if ($signin == '1')
-                <div id="customTimer" class="mb-4 hidden">
-                    <label class="block mb-2">
-                        Duration (seconds):
-                    </label>
-                    <input type="number" id="customDuration" class="block border rounded p-2 w-full" min="1" value="300">
-                </div>
-
-                <div>
-                    <label class="block mb-2">
-                        Orange Alert (seconds remaining):
-                    </label>
-                    <input type="number" id="orangeAlert" class="block border rounded p-2 w-full mb-4" min="0" value="60">
-                </div>
-
-                <div>
-                    <label class="block mb-2">
-                        Red Alert (seconds remaining):
-                    </label>
-                    <input type="number" id="redAlert" class="block border rounded p-2 w-full mb-4" min="0" value="30">
-                </div>
-            @endif
-
-            <div class="mb-4">
+            <div id="customTimer" class="mb-4">
                 <label class="block mb-2">
+                    Duration (seconds):
+                </label>
+                <input type="number"
+                    id="customDuration"
+                    class="block border rounded p-2 w-full"
+                    min="1"
+                    value="300"
+                    @if ($signin != '1') 
+                        disabled
+                    @endif
+                    >
+            </div>
+
+            <div>
+                <label class="block mb-2">
+                    Orange Alert (seconds remaining):
+                </label>
+                <input type="number"
+                    id="orangeAlert"
+                    class="block border rounded p-2 w-full mb-4"
+                    min="0"
+                    value="60"
+                    @if ($signin != '1') disabled @endif>
+            </div>
+
+            <div>
+                <label class="block mb-2">
+                    Red Alert (seconds remaining):
+                </label>
+                <input type="number"
+                    id="redAlert"
+                    class="block border rounded p-2 w-full mb-4"
+                    min="0"
+                    value="30"
+                    @if ($signin != '1') disabled @endif>
+            </div>
+
+            <div class="flex items-center mb-4 gap-4">
+                <label class="block">
                     Stop at 00:00:
                 </label>
                 <input type="checkbox" id="stopAtZero" class="rounded" checked>

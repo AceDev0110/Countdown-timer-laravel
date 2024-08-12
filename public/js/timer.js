@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let stopAtZero = true;
     
     // Initialize audio objects
-    const tickSound = new Audio("tick.mp3");
-    const gongSound = new Audio("gong.mp3");
+    const tickSound = new Audio("/tick.m4a");
+    const gongSound = new Audio("/gong.wav");
 
     function updateTimerDisplay() {
         const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
