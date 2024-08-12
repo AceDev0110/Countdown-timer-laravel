@@ -1,25 +1,27 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\DashboardController;
+
 Route::get('/', function () {
-    return view('auth/login');
+    $data = ['signin' => '0'];
+    return view('dashboard', $data);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
 
+Route::get('/dashboard', [DashboardController::class, 'showDashboard']);
+
+// Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->name('dashboard');
 
 Route::get('/login/guest', function () {
-    return view('dashboard');
+    $data = ['signin' => '1'];
+    return view('dashboard', $data);
 });
-Route::get('login/{provider}/redirect', [SocialLoginController::class , 'redirect'])->name('auth.socialite.redirect');
-Route::get('login/{provider}/callback', [SocialLoginController::class , 'callback'])->name('auth.socialite.callback');
+
+Route::get('login/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.socialite.redirect');
+Route::get('login/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.socialite.callback');

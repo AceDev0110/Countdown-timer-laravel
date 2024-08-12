@@ -1,5 +1,7 @@
+@props(['signin' => ''])
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +12,26 @@
         #timer {
             font-size: 200px;
         }
+
         .modal-bg {
             background: rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between h-screen p-4 bg-gray-100">
+
+<body
+    class="flex flex-col items-center justify-between h-screen p-4 {{ $signin == '1' ? 'bg-gray-300' : 'bg-gray-400' }}">
 
     <!-- Settings -->
-    <div class="w-full flex justify-end p-4">
+    <div class="w-full flex justify-end p-4 gap-x-4">
+        @if ($signin == '0')
+            <a href="{{ route('auth.socialite.redirect', 'google') }}" class="text-gray-600 hover:text-gray-800">
+                <i class="fab fa-google fa-2x"></i>
+            </a>
+            <a href="{{ route('auth.socialite.redirect', 'twitter') }}" class="text-gray-600 hover:text-gray-800">
+                <i class="fab fa-twitter fa-2x"></i>
+            </a>
+        @endif
         <button id="settingsButton" class="text-gray-600 hover:text-gray-800">
             <i class="fas fa-cog fa-2x"></i>
         </button>
@@ -45,7 +58,9 @@
                 </label>
                 <select id="timerMode" class="block border rounded p-2 w-full mb-4">
                     <option value="predefined">Predefined</option>
-                    <option value="custom">Custom</option>
+                    @if ($signin == '1')
+                        <option value="custom">Custom</option>
+                    @endif
                 </select>
             </div>
 
@@ -64,26 +79,28 @@
                 </select>
             </div>
 
-            <div id="customTimer" class="mb-4 hidden">
-                <label class="block mb-2">
-                    Duration (seconds):
-                </label>
-                <input type="number" id="customDuration" class="block border rounded p-2 w-full" min="1" value="300">
-            </div>
+            @if ($signin == '1')
+                <div id="customTimer" class="mb-4 hidden">
+                    <label class="block mb-2">
+                        Duration (seconds):
+                    </label>
+                    <input type="number" id="customDuration" class="block border rounded p-2 w-full" min="1" value="300">
+                </div>
 
-            <div>
-                <label class="block mb-2">
-                    Orange Alert (seconds remaining):
-                </label>
-                <input type="number" id="orangeAlert" class="block border rounded p-2 w-full mb-4" min="0" value="60">
-            </div>
+                <div>
+                    <label class="block mb-2">
+                        Orange Alert (seconds remaining):
+                    </label>
+                    <input type="number" id="orangeAlert" class="block border rounded p-2 w-full mb-4" min="0" value="60">
+                </div>
 
-            <div>
-                <label class="block mb-2">
-                    Red Alert (seconds remaining):
-                </label>
-                <input type="number" id="redAlert" class="block border rounded p-2 w-full mb-4" min="0" value="30">
-            </div>
+                <div>
+                    <label class="block mb-2">
+                        Red Alert (seconds remaining):
+                    </label>
+                    <input type="number" id="redAlert" class="block border rounded p-2 w-full mb-4" min="0" value="30">
+                </div>
+            @endif
 
             <div class="mb-4">
                 <label class="block mb-2">
@@ -99,9 +116,14 @@
         </div>
     </div>
 
+    <script>
+        window.APP_SIGNIN = @json($signin);
+    </script>
+
     <!-- FontAwesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <!-- Include timer functionality -->
     <script src="{{ asset('js/timer.js') }}"></script>
 </body>
+
 </html>

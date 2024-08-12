@@ -36,6 +36,7 @@ class SocialLoginController extends Controller
         //         'provider_token' => $user->token
         //     ]);
         // }
-        return view('dashboard');
+        $data = ['signin' => '1'];
+        return view('dashboard', $data);
     }
 }
