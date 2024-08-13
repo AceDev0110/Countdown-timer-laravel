@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Set initial values for the modal inputs
         timerModeDropdown.value = time === 300 ? "predefined" : "custom";
         predefinedTimerSelect.value = String(time);
-        console.log(window.APP_SIGNIN);
         if (window.APP_SIGNIN == 1) {
             customDurationInput.value = String(time);
             orangeAlertInput.value = String(orangeAlertTime);
